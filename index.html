@@ -15,6 +15,19 @@
 .timeline .book {display:grid;grid-template-columns:minmax(140px,230px) minmax(0,1fr);gap:32px}
 .timeline .book .cover {height:285px}
 @media(max-width:650px){.books:not(.timeline){grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.book .cover{height:360px}.timeline .book{display:flex;flex-direction:column}.timeline .book .cover{width:100%;max-width:280px}}
+
+/* Layout v3: a altura da capa é fixa e o conteúdo fica sempre em fluxo normal */
+#books.books:not(.timeline){display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));align-items:stretch;gap:45px 28px}
+#books .book{display:flex;flex-direction:column;position:relative;min-width:0;min-height:0;overflow:visible}
+#books .book .cover{display:flex;align-items:center;justify-content:center;width:100%;height:350px;min-height:350px;max-height:350px;padding:20px;overflow:hidden;flex:none;position:relative;box-sizing:border-box}
+#books .book .cover img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;min-width:0;min-height:0;object-fit:contain;position:static;flex:0 1 auto}
+#books .book .book-details{display:flex;flex-direction:column;align-items:flex-start;position:static;clear:both;min-height:0;padding:20px 0 0;margin:0;transform:none}
+#books .book .book-details .year{display:block;margin:0 0 7px;position:static}
+#books .book .book-details h3{display:block;margin:0 0 14px;position:static;line-height:1.3;font-size:25px;overflow-wrap:break-word}
+#books .book .book-details p{display:block;margin:0 0 18px;position:static}
+#books.timeline .book{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;max-width:980px;align-items:start}
+#books.timeline .book .cover{height:290px;min-height:290px;max-height:290px}
+@media(max-width:650px){#books.timeline .book{display:flex;flex-direction:column}#books.timeline .book .cover{width:100%;max-width:300px}}
 </style></head><body>
 <header class="header"><a href="#inicio" class="brand">ANDRÉ M. FERNANDES</a><nav><a href="#livros">LIVROS</a><a href="#sobre">SOBRE</a><a href="#brevemente">BREVEMENTE</a><a href="#contacto">CONTACTO</a></nav></header>
 <main id="inicio"><section class="hero"><span class="eyebrow">PORTFÓLIO LITERÁRIO</span><h1><strong>Escrita que desafia</strong><br><em>as fronteiras da mente.</em></h1><a class="cta" href="#livros">EXPLORAR CATÁLOGO ↗</a></section>
@@ -32,7 +45,7 @@ const books=[
 ["Na Luz do Horizonte",2018,"Packa foi obrigada a adaptar-se às tentações do lado obscuro da religião, numa luta pela sobrevivência e pela verdade da sua alma.","B07DRBJFT7"],
 ["Inocente",2018,"Baseado em factos reais da juventude do autor, este livro explora deduções e mistérios que envolvem a vida de uma jovem.","B078Y8ZSP6"],
 ["Amor Meu",2017,"Dois jovens descobrem o amor cedo demais. Entre distância e saudade, o romance questiona os limites do amor.","B077FLBYZH"]];
-const root=document.getElementById('books');root.innerHTML=books.map(([title,year,description,asin])=>'<article class="book"><div class="cover"><img src="https://m.media-amazon.com/images/P/'+asin+'.01.LZZZZZZZ.jpg" alt="Capa de '+title+'" loading="lazy" onerror="this.replaceWith(document.createTextNode(this.alt))"></div><div><div class="year">'+year+'</div><h3>'+title+'</h3><p>'+description+'</p><a class="buy" target="_blank" rel="noopener" href="https://www.amazon.es/dp/'+asin+'">COMPRAR NA AMAZON ↗</a></div></article>').join('');
+const root=document.getElementById('books');root.innerHTML=books.map(([title,year,description,asin])=>'<article class="book"><div class="cover"><img src="https://m.media-amazon.com/images/P/'+asin+'.01.LZZZZZZZ.jpg" alt="Capa de '+title+'" loading="lazy" onerror="this.replaceWith(document.createTextNode(this.alt))"></div><div class="book-details"><div class="year">'+year+'</div><h3>'+title+'</h3><p>'+description+'</p><a class="buy" target="_blank" rel="noopener" href="https://www.amazon.es/dp/'+asin+'">COMPRAR NA AMAZON ↗</a></div></article>').join('');
 document.getElementById('grid').onclick=()=>{root.classList.remove('timeline');grid.classList.add('active');timeline.classList.remove('active')};
 document.getElementById('timeline').onclick=()=>{root.classList.add('timeline');timeline.classList.add('active');grid.classList.remove('active')};
 document.getElementById('newsletter').onsubmit=e=>{e.preventDefault();document.getElementById('feedback').textContent='A subscrição ainda não está configurada. Contacta o autor por correio eletrónico.'};
